@@ -9,7 +9,7 @@ namespace apimentoringsystem.Controllers
     [ApiController]
     public class mentorController : ControllerBase
     {
-        List<mentor> mentorData = new List<mentor>();
+       public static List<mentor> mentorData = new List<mentor>();
         // GET: api/<mentorController>
         [HttpGet]
         public IEnumerable<mentor> Get()
@@ -19,9 +19,17 @@ namespace apimentoringsystem.Controllers
 
         // GET api/<mentorController>/5
         [HttpGet("{id}")]
-        public mentor Get(int id)
+        public mentor? Get(int id)
         {
-            return mentorData[id];
+
+            for (int i = 0; i < mentorData.Count; i++)
+            {
+                if (mentorData[i].Id == id)
+                {
+                    return mentorData[i];
+                }
+            }
+            return null;
         }
 
         // POST api/<mentorController>
@@ -35,14 +43,28 @@ namespace apimentoringsystem.Controllers
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
-            mentorData[id].Equals(value);
+            for (int i = 0; i < mentorData.Count; i++)
+            {
+                if (mentorData[i].Id == id)
+                {
+                    mentorData[i].Equals(value);
+                }
+            }
         }
 
         // DELETE api/<mentorController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            mentorData.RemoveAt(id);
+            for (int i = 0; i < mentorData.Count; i++)
+            {
+                if (mentorData[i].Id == id)
+                {
+                    mentorData.RemoveAt(i);
+                }
+            
+            }
+       
         }
     }
 }

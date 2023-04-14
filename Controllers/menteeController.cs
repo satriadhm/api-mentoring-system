@@ -9,11 +9,7 @@ namespace apimentoringsystem.Controllers
     [ApiController]
     public class menteeController : ControllerBase
     {
-       public static List<mentee> menteeData = new List<mentee> 
-        {
-            new mentee ("Joko Widodo", "jokowi", "12345","17")
-        };
-
+        public static List<mentee> menteeData = new List<mentee>();
         // GET: api/<menteeController>
 
         [HttpGet]
@@ -31,7 +27,6 @@ namespace apimentoringsystem.Controllers
                 {
                     return menteeData[i];
                 }
-                return null;
             }
             return null;
         }

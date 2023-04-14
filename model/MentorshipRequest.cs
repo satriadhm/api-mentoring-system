@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,10 @@ namespace mentoring_system.model
 
         public MentorshipRequest(string? name, DateTime? schedule, subjekMentoring subject)
         {
+            Debug.Assert(!string.IsNullOrEmpty(name), "Nama mentor tidak boleh kosong.");
+            Debug.Assert(schedule != null, "Tanggal tidak boleh kosong");
+
+
             Random random = new Random();
             this.name = name;
             this.schedule = schedule;
