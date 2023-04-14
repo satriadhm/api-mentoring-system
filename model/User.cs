@@ -25,11 +25,11 @@ namespace mentoring_system.model
         public User(string namaLengkap, string username, string password, string umur)
 
         {
-            Debug.Assert(!string.IsNullOrEmpty(namaLengkap), "Nama Lengkap tidak boleh kosong.");
-            Debug.Assert(!string.IsNullOrEmpty(userName), "Username tidak boleh kosong.");
-            Debug.Assert(!string.IsNullOrEmpty(password), "Password tidak boleh kosong.");
-            Debug.Assert(namaLengkap.Length <= 30,"Nama Lengkap maksimal 3 kata.");
-            Debug.Assert(username.Length <= 10, "Username maksimal 10 karakter.");
+            //Debug.Assert(!string.IsNullOrEmpty(namaLengkap), "Nama Lengkap tidak boleh kosong.");
+            //Debug.Assert(!string.IsNullOrEmpty(userName), "Username tidak boleh kosong.");
+            //Debug.Assert(!string.IsNullOrEmpty(password), "Password tidak boleh kosong.");
+            //Debug.Assert(namaLengkap.Length <= 30,"Nama Lengkap maksimal 3 kata.");
+            //Debug.Assert(username.Length <= 10, "Username maksimal 10 karakter.");
             
 
             Random random = new Random();
