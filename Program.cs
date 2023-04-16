@@ -1,4 +1,5 @@
 using System.Diagnostics;
+
 namespace apimentoringsystem
 
 {
@@ -6,9 +7,6 @@ namespace apimentoringsystem
     {
         public static void Main(string[] args)
         {
-            Process secondProcess = new Process();
-            secondProcess.StartInfo.FileName = @"..\mentoring-system\bin\Debug\net6.0-windows\mentoring-system.exe";
-            secondProcess.Start();
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
