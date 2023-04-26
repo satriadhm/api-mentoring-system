@@ -1,7 +1,6 @@
 ﻿using mentoring_system.model;
 using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using System.Diagnostics;
 
 namespace apimentoringsystem.Controllers
 {
@@ -9,18 +8,28 @@ namespace apimentoringsystem.Controllers
     [ApiController]
     public class menteeController : ControllerBase
     {
-        public static List<mentee> menteeData = new List<mentee>();
-        // GET: api/<menteeController>
+        public static List<mentee> menteeData = new List<mentee>
+        {
+            new mentee("Alice Jones", "alicejones", "password123", "23"),
+            new mentee("Bob Smith", "bobsmith", "password456", "27"),
+            new mentee("Charlie Brown", "charliebrown", "password789", "21")
+        };
 
+        // Pre-condition: Semua data mentee yang dibuat harus memiliki informasi yang valid dan lengkap, seperti nama, username, password, dan usia.
+        // Inputan yang diterima oleh API harus divalidasi sebelum digunakan untuk mencegah kesalahan atau serangan dari pengguna jahat.
         [HttpGet]
         public IEnumerable<mentee> Get()
         {
+            Debug.Assert(menteeData != null, "Mentee Data should not be null");
             return menteeData;
         }
 
+        // Exception: Jika ID mentee yang diminta tidak ditemukan dalam database, kembalikan respons HTTP 404 (Not Found).
         [HttpGet("{id}")]
         public mentee? Get(int id)
         {
+            Debug.Assert(id > 0, "Id should be greater than zero");
+
             for (int i = 0; i < menteeData.Count; i++)
             {
                 if (menteeData[i].Id == id)
@@ -28,41 +37,72 @@ namespace apimentoringsystem.Controllers
                     return menteeData[i];
                 }
             }
-            return null;
+
+            return NotFound();
         }
 
-        // POST api/<menteeController>
+        // Pre-condition: Inputan yang diterima oleh API harus divalidasi sebelum digunakan untuk mencegah kesalahan atau serangan dari pengguna jahat.
+        // Exception: Jika inputan yang diberikan oleh pengguna tidak valid atau tidak lengkap, kembalikan respons HTTP 400 (Bad Request).
         [HttpPost]
-        public void Post([FromBody] mentee value)
+        public IActionResult Post([FromBody] mentee value)
         {
-            menteeData.Add(value);
-        }
+            Debug.Assert(value != null, "Value should not be null");
 
-        // PUT api/<menteeController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] mentee value)
-        {
-           for (int i = 0 ; i < menteeData.Count; i++) 
+            if (ModelState.IsValid)
             {
-                if (menteeData[i].Id == id) 
-                {
-                    menteeData[i] = value;
-                }
+                menteeData.Add(value);
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
             }
         }
 
-        // DELETE api/<menteeController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        // Pre-condition: Inputan yang diterima oleh API harus divalidasi sebelum digunakan untuk mencegah kesalahan atau serangan dari pengguna jahat.
+        // Exception: Jika ID mentee yang diminta tidak ditemukan dalam database, kembalikan respons HTTP 404 (Not Found).
+        // Exception: Jika inputan yang diberikan oleh pengguna tidak valid atau tidak lengkap, kembalikan respons HTTP 400 (Bad Request).
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, [FromBody] mentee value)
         {
+            Debug.Assert(id > 0, "Id should be greater than zero");
+            Debug.Assert(value != null, "Value should not be null");
+
+            if (ModelState.IsValid)
+            {
+                for (int i = 0; i < menteeData.Count; i++)
+                {
+                    if (menteeData[i].Id == id)
+                    {
+                        menteeData[i] = value;
+                        return Ok();
+                    }
+                }
+
+                return NotFound();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+        // Exception: Jika ID mentee yang diminta tidak ditemukan dalam database, kembalikan respons HTTP 404 (Not Found).
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            Debug.Assert(id > 0, "Id should be greater than zero");
+
             for (int i = 0; i < menteeData.Count; i++)
             {
                 if (menteeData[i].Id == id)
                 {
-                    menteeData.RemoveAt(i);        
+                    menteeData.RemoveAt(i);
+                    return Ok();
                 }
             }
-            
+
+            return NotFound();
         }
     }
-}
+    }
+
