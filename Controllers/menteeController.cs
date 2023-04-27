@@ -15,8 +15,6 @@ namespace apimentoringsystem.Controllers
             new mentee("Charlie Brown", "charliebrown", "password789", "21")
         };
 
-        // Pre-condition: Semua data mentee yang dibuat harus memiliki informasi yang valid dan lengkap, seperti nama, username, password, dan usia.
-        // Inputan yang diterima oleh API harus divalidasi sebelum digunakan untuk mencegah kesalahan atau serangan dari pengguna jahat.
         [HttpGet]
         public IEnumerable<mentee> Get()
         {
@@ -24,7 +22,6 @@ namespace apimentoringsystem.Controllers
             return menteeData;
         }
 
-        // Exception: Jika ID mentee yang diminta tidak ditemukan dalam database, kembalikan respons HTTP 404 (Not Found).
         [HttpGet("{id}")]
         public mentee? Get(int id)
         {
@@ -38,57 +35,36 @@ namespace apimentoringsystem.Controllers
                 }
             }
 
-            return NotFound();
+            return null;
         }
 
-        // Pre-condition: Inputan yang diterima oleh API harus divalidasi sebelum digunakan untuk mencegah kesalahan atau serangan dari pengguna jahat.
-        // Exception: Jika inputan yang diberikan oleh pengguna tidak valid atau tidak lengkap, kembalikan respons HTTP 400 (Bad Request).
         [HttpPost]
-        public IActionResult Post([FromBody] mentee value)
+        public void Post([FromBody] mentee value)
         {
             Debug.Assert(value != null, "Value should not be null");
-
-            if (ModelState.IsValid)
-            {
-                menteeData.Add(value);
-                return Ok();
-            }
-            else
-            {
-                return BadRequest();
-            }
+            menteeData.Add(value);
         }
 
-        // Pre-condition: Inputan yang diterima oleh API harus divalidasi sebelum digunakan untuk mencegah kesalahan atau serangan dari pengguna jahat.
-        // Exception: Jika ID mentee yang diminta tidak ditemukan dalam database, kembalikan respons HTTP 404 (Not Found).
-        // Exception: Jika inputan yang diberikan oleh pengguna tidak valid atau tidak lengkap, kembalikan respons HTTP 400 (Bad Request).
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] mentee value)
+        public void Put(int id, [FromBody] mentee value)
         {
             Debug.Assert(id > 0, "Id should be greater than zero");
             Debug.Assert(value != null, "Value should not be null");
 
-            if (ModelState.IsValid)
+            for (int i = 0; i < menteeData.Count; i++)
             {
-                for (int i = 0; i < menteeData.Count; i++)
+                if (menteeData[i].Id == id)
                 {
-                    if (menteeData[i].Id == id)
-                    {
-                        menteeData[i] = value;
-                        return Ok();
-                    }
+                    menteeData[i] = value;
+                    return;
                 }
+            }
 
-                return NotFound();
-            }
-            else
-            {
-                return BadRequest();
-            }
+            Debug.Fail("Mentee with specified id not found.");
         }
-        // Exception: Jika ID mentee yang diminta tidak ditemukan dalam database, kembalikan respons HTTP 404 (Not Found).
+
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public void Delete(int id)
         {
             Debug.Assert(id > 0, "Id should be greater than zero");
 
@@ -97,12 +73,11 @@ namespace apimentoringsystem.Controllers
                 if (menteeData[i].Id == id)
                 {
                     menteeData.RemoveAt(i);
-                    return Ok();
+                    return;
                 }
             }
 
-            return NotFound();
+            Debug.Fail("Mentee with specified id not found.");
         }
     }
-    }
-
+}
