@@ -1,67 +1,67 @@
-﻿using mentoring_system.model;
-using Microsoft.AspNetCore.Mvc;
+﻿    using mentoring_system.model;
+    using Microsoft.AspNetCore.Mvc;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+    // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace apimentoringsystem.Controllers
-{
-    [Route("api/[controller]")]
-    [ApiController]
-    public class mentorshipRequestController : ControllerBase
+    namespace apimentoringsystem.Controllers
     {
-        public static List<MentorshipRequest> mentorshipRequests = new List<MentorshipRequest>();
-        // GET: api/<mentorshipController>
-        [HttpGet]
-        public IEnumerable<MentorshipRequest> Get()
+        [Route("api/[controller]")]
+        [ApiController]
+        public class mentorshipRequestController : ControllerBase
         {
-            return mentorshipRequests;
-        }
-
-        // GET api/<mentorshipController>/5
-        [HttpGet("{id}")]
-        public MentorshipRequest? Get(int id)
-        {
-            for (int i = 0; i < mentorshipRequests.Count; i++)
+            public static List<MentorshipRequest> mentorshipRequests = new List<MentorshipRequest>();
+            // GET: api/<mentorshipController>
+            [HttpGet]
+            public IEnumerable<MentorshipRequest> Get()
             {
-                if (mentorshipRequests[i].Id == id)
+                return mentorshipRequests;
+            }
+
+            // GET api/<mentorshipController>/5
+            [HttpGet("{id}")]
+            public MentorshipRequest? Get(int id)
+            {
+                for (int i = 0; i < mentorshipRequests.Count; i++)
                 {
-                    return mentorshipRequests[i];
+                    if (mentorshipRequests[i].Id == id)
+                    {
+                        return mentorshipRequests[i];
+                    }
+                }
+                return null; 
+            }
+
+            // POST api/<mentorshipController>
+            [HttpPost]
+            public void Post([FromBody] MentorshipRequest value)
+            {
+                mentorshipRequests.Add(value);
+            }
+
+            // PUT api/<mentorshipController>/5
+            [HttpPut("{id}")]
+            public void Put(int id, [FromBody] MentorshipRequest value)
+            {
+                for (int i = 0; i < mentorshipRequests.Count; i++)
+                {
+                    if (mentorshipRequests[i].Id == id)
+                    {
+                        mentorshipRequests[i] = value;
+                    }
                 }
             }
-            return null; 
-        }
 
-        // POST api/<mentorshipController>
-        [HttpPost]
-        public void Post([FromBody] MentorshipRequest value)
-        {
-            mentorshipRequests.Add(value);
-        }
-
-        // PUT api/<mentorshipController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] MentorshipRequest value)
-        {
-            for (int i = 0; i < mentorshipRequests.Count; i++)
+            // DELETE api/<mentorshipController>/5
+            [HttpDelete("{id}")]
+            public void Delete(int id)
             {
-                if (mentorshipRequests[i].Id == id)
+                for (int i = 0; i < mentorshipRequests.Count; i++)
                 {
-                    mentorshipRequests[i] = value;
-                }
-            }
-        }
-
-        // DELETE api/<mentorshipController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-            for (int i = 0; i < mentorshipRequests.Count; i++)
-            {
-                if (mentorshipRequests[i].Id == id)
-                {
-                    mentorshipRequests.RemoveAt(i);
+                    if (mentorshipRequests[i].Id == id)
+                    {
+                        mentorshipRequests.RemoveAt(i);
+                    }
                 }
             }
         }
     }
-}
