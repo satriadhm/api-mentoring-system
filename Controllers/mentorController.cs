@@ -10,12 +10,7 @@ namespace apimentoringsystem.Controllers
     [ApiController]
     public class mentorController : ControllerBase
     {
-        public static List<mentor> mentorData = new List<mentor>
-        {
-            new mentor("John Doe", "johndoe", "password123", "35", subjekMentoring.interactionDesign),
-            new mentor("Jane Smith", "janesmith", "password456", "28", subjekMentoring.dataStructure),
-            new mentor("Bob Johnson", "bobjohnson", "password789", "42", subjekMentoring.Algorithm)
-        };
+        public static List<mentor> mentorData = new List<mentor>();
 
         // Pra-kondisi: id yang diberikan haruslah bilangan bulat positif
         // Post-kondisi: Mengembalikan data mentor dengan id sesuai yang diberikan, jika tidak ditemukan maka mengembalikan null

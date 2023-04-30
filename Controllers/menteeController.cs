@@ -8,12 +8,7 @@ namespace apimentoringsystem.Controllers
     [ApiController]
     public class menteeController : ControllerBase
     {
-        public static List<mentee> menteeData = new List<mentee>
-        {
-            new mentee("Alice Jones", "alicejones", "password123", "23"),
-            new mentee("Bob Smith", "bobsmith", "password456", "27"),
-            new mentee("Charlie Brown", "charliebrown", "password789", "21")
-        };
+        public static List<mentee> menteeData = new List<mentee>();
 
         [HttpGet]
         public IEnumerable<mentee> Get()

@@ -9,7 +9,7 @@ namespace apimentoringsystem.Controllers
     [ApiController]
 public class mentorshipController : ControllerBase
 {
-        public static List<genericsMentorship<string>> mentorship = new List<genericsMentorship<string>>();
+    public static List<genericsMentorship<string>> mentorship = new List<genericsMentorship<string>>();
     // GET: api/<mentorshipController>
     [HttpGet]
     public IEnumerable<genericsMentorship<string>> Get()
@@ -23,7 +23,7 @@ public class mentorshipController : ControllerBase
     {
             for (int i = 0; i < mentorship.Count; i++)
             {
-                if (    mentorship[i].Id == id)
+                if (mentorship[i].Id == id)
                 {
                     return mentorship[i];
                 }
