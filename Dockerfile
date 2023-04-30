@@ -18,4 +18,4 @@ RUN dotnet publish "api-mentoring-system.csproj" -c Release -o /app/publish /p:U
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "api-mentoring-system.dll"]
+ENTRYPOINT ["dotnet", "api-mentoring-system.dll", "--environment=Development"]
